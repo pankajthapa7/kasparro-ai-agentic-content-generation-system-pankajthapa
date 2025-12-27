@@ -25,6 +25,24 @@ All outputs are generated as clean JSON files and the entire flow is controlled 
 
 ## System Design
 The system is designed using independent agents with clear input and output boundaries.
+This project is designed as a modular, agent-based automation system that converts structured product data into multiple machine-readable content pages.
+The focus of the design is clear separation of responsibilities, reusability, and extensibility.
+
+High-Level Flow
+
+The system follows a step-by-step pipeline:
+
+Raw Product Data
+→ Product Parser Agent
+→ Question Generation Agent
+→ Content Logic Agent
+→ Template Engine
+→ Page Assembly Agent
+→ JSON Outputs
+
+Each step is handled by a dedicated agent with a single responsibility.
+
+
 
 ### Main Components
 - **ProductParserAgent**  
