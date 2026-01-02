@@ -1,85 +1,93 @@
 Kasparro – Agentic Content Generation System
 Overview
 
-This project implements a modular, agent-based automation system that converts structured product data into multiple machine-readable content pages (FAQ, Product, Comparison).
+This project implements a true multi-agent content generation system that converts structured product data into multiple machine-readable content pages using autonomous, modular agents coordinated through an orchestration mechanism.
 
-The focus is system design and agent orchestration, not content creativity or UI.
+The focus of this system is agentic design, not content writing or prompting.
 
-@Key Design Principles
+What This System Does
 
-Multi-agent architecture with single-responsibility agents
+Given a single product input, the system autonomously generates:
 
-Deterministic, rule-based logic (no external data or prompts)
+FAQ Page (faq.json)
 
-Reusable content logic blocks
+Product Description Page (product_page.json)
 
-Template-driven page generation
+Comparison Page (comparison_page.json)
 
-Central orchestration pipeline
+All outputs are:
 
-@High-Level System Flow
+Deterministic
+
+Template-driven
+
+Fully machine-readable JSON
+
+Agentic Architecture (High Level)
+
+Each agent has one responsibility and no hidden state.
+
 Raw Product Data
-        ↓
-Product Parser Agent
-        ↓
-Normalized Product Model
-        ↓
-Question Generation Agent
-        ↓
-Reusable Content Logic Blocks
-        ↓
-Template Engine
-        ↓
-Page Assembly Agent
-        ↓
+        |
+        v
++-------------------+
+| Product Parser    |
++-------------------+
+        |
+        v
++-------------------+
+| Question Generator|
++-------------------+
+        |
+        v
++-------------------+
+| Content Logic     |
++-------------------+
+        |
+        v
++-------------------+
+| Page Agents       |
+| (FAQ / Product / |
+|  Comparison)      |
++-------------------+
+        |
+        v
++-------------------+
+| Orchestrator      |
++-------------------+
+        |
+        v
 JSON Outputs
 
-@Agent Responsibilities (At a Glance)
-Agent	Responsibility
-ProductParserAgent	Normalize raw product input
-QuestionGenerationAgent	Generate categorized user questions
-ContentLogicAgent	Reusable content transformation blocks
-ComparisonLogicAgent	Rule-based product comparison
-Template Agents	Define page structure (FAQ, Product, Comparison)
-Orchestrator	Controls execution order (pipeline/DAG)
+Key Design Principles
 
-@Orchestration Diagram (System Design)
-┌──────────────────┐
-│ Raw Product Data │
-└─────────┬────────┘
-          ↓
-┌──────────────────┐
-│ Parser Agent     │
-└─────────┬────────┘
-          ↓
-┌──────────────────┐
-│ Question Agent   │
-└─────────┬────────┘
-          ↓
-┌──────────────────┐
-│ Content Logic    │
-│ (Reusable Blocks)│
-└─────────┬────────┘
-          ↓
-┌──────────────────┐
-│ Templates        │
-│ (FAQ/Product/Comp)│
-└─────────┬────────┘
-          ↓
-┌──────────────────┐
-│ Page Assembly    │
-└─────────┬────────┘
-          ↓
-┌──────────────────┐
-│ JSON Outputs     │
-└──────────────────┘
+True Agent Autonomy
+Each agent operates independently and is invoked by the orchestrator via explicit inputs and outputs.
 
-@How to Run
+No Monolithic Flow
+Logic, templates, and orchestration are clearly separated.
+
+Composable & Extensible
+New agents or page types can be added without modifying existing agents.
+
+Deterministic Execution
+No hard-coded page logic or static content assembly.
+
+
+main.py
+
+How to Run the System
+1. Run the pipeline
 python main.py
 
+2. Generated Outputs
 
-@Generated files:
+The system will generate:
+
 output/
  ├── faq.json
  ├── product_page.json
  └── comparison_page.json
+
+
+Each file is produced via agent coordination, not manual wiring.
