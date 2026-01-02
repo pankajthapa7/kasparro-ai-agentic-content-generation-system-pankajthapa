@@ -1,82 +1,86 @@
-# Applied AI Engineer Challenge – Multi-Agent Content Generation System
+ Multi-Agent Content Generation System
 
 ## Problem Statement
-The goal of this assignment is to design a modular agent-based system that takes structured product data as input and automatically generates machine-readable content pages such as FAQs, product descriptions, and product comparisons.
-
-The focus of the task is on system design, agent orchestration, and reusable logic rather than content creativity or domain knowledge.
+Design a system that automatically generates structured content pages from a given product dataset using a true multi-agent architecture. The system must be modular, extensible, and produce machine-readable outputs without relying on hard-coded logic.
 
 ---
 
 ## Solution Overview
-This project implements a simple multi-agent pipeline where each agent has a clear and single responsibility. The system parses product data, generates structured questions, applies reusable content logic, and assembles multiple content pages using templates.
+This project implements a lightweight agentic automation system where independent agents collaborate through an orchestrator. Each agent has a single responsibility and operates on shared state, allowing dynamic coordination instead of static function calls.
 
-All outputs are generated as clean JSON files and the entire flow is controlled by an orchestrator.
+The system generates:
+- FAQ Page
+- Product Description Page
+- Comparison Page (with a fictional product)
+
+All outputs are produced as structured JSON.
 
 ---
 
 ## Scope & Assumptions
-- Only the provided product data is used.
-- No external data or research is added.
-- Product B in the comparison page is fictional but statically defined.
-- The system is rule-based and deterministic.
-- The focus is on backend automation, not UI or frontend rendering.
+- Only the provided product data is used
+- No external research or enrichment is performed
+- Product B in comparison is fictional and statically defined
+- Focus is on system design, not content creativity
 
 ---
 
-## System Design
-The system is designed using independent agents with clear input and output boundaries.
-This project is designed as a modular, agent-based automation system that converts structured product data into multiple machine-readable content pages.
-The focus of the design is clear separation of responsibilities, reusability, and extensibility.
+## System Design (Core)
+The system follows a **state-driven agent orchestration model**.
 
-High-Level Flow
-
-The system follows a step-by-step pipeline:
-
-Raw Product Data
-→ Product Parser Agent
-→ Question Generation Agent
-→ Content Logic Agent
-→ Template Engine
-→ Page Assembly Agent
-→ JSON Outputs
-
-Each step is handled by a dedicated agent with a single responsibility.
-
-
-
-### Main Components
+### Agents
 - **ProductParserAgent**  
-  Converts raw product input into a normalized internal product model.
+  Normalizes raw input data into an internal product model.
 
 - **QuestionGenerationAgent**  
-  Generates categorized user questions using predefined rules.
+  Generates categorized user questions from product data.
 
-- **ContentLogicAgent**  
-  Contains reusable logic blocks for benefits, usage, ingredients, and safety information.
+- **FAQAgent**  
+  Builds FAQ content using product data and generated questions.
 
-- **Template Engine**  
-  Defines the structure of FAQ, Product, and Comparison pages and pulls required logic blocks.
+- **ProductPageAgent**  
+  Generates structured product page content.
 
-- **ComparisonLogicAgent**  
-  Handles rule-based comparison between the main product and a fictional Product B.
+- **ComparisonAgent**  
+  Compares the main product with a fictional Product B.
 
-- **PageAssemblyAgent**  
-  Assembles final page outputs in JSON format.
-
-- **Orchestrator**  
-  Controls the execution flow between agents and ensures the full pipeline runs in sequence.
+Each agent:
+- Is stateless
+- Has a single responsibility
+- Exposes a `run()` interface
 
 ---
 
-## Output
-The system generates the following JSON files:
-- `faq.json`
-- `product_page.json`
-- `comparison_page.json`
+### Orchestration Flow
+The orchestrator controls execution by passing a shared state object across agents.
 
-Each file is fully machine-readable and follows a consistent schema.
+Raw Input
+↓
+ProductParserAgent
+↓
+QuestionGenerationAgent
+↓
+FAQAgent / ProductPageAgent / ComparisonAgent
+↓
+JSON Outputs
+
+
+
+This design allows agents to be added, removed, or reordered without modifying other agents.
+
+---
+
+## Extensibility
+- New page types can be added by introducing new agents
+- Logic can be extended without refactoring orchestration
+- LLM-backed agents can replace rule-based agents in future
+
+---
+
+## Output Structure
+Each page is generated as clean, machine-readable JSON and can be consumed by downstream systems such as CMS pipelines or search indexes.
 
 ---
 
 ## Conclusion
-This system demonstrates a production-style agentic architecture with clear separation of concerns, reusable logic, and extensible design. New products or page types can be added with minimal changes to the existing pipeline.
+This project demonstrates a true agentic architecture with clear agent autonomy, dynamic orchestration, and production-oriented design principles aligned with the assignment requirements

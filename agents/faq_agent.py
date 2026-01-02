@@ -1,7 +1,7 @@
 class FAQAgent:
     def run(self, state):
         faqs = []
-        # Access the inner product data
+        
         p_data = state.get("product", {})
         
         question_map = {
@@ -12,7 +12,7 @@ class FAQAgent:
         }
 
         for category, data_key in question_map.items():
-            # Look inside p_data instead of state
+            
             answer = p_data.get(data_key, "Information not available")
             faqs.append({
                 "category": category,

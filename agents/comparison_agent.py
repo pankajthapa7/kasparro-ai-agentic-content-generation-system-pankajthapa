@@ -2,7 +2,7 @@ from data.fictional_product_b import PRODUCT_B
 
 class ComparisonAgent:
     def run(self, state):
-        # Product A is inside state['product']
+        
         a = state.get("product", {})
         b = PRODUCT_B
 
@@ -12,7 +12,7 @@ class ComparisonAgent:
             return set([i.strip() for i in val.split(",") if i.strip()])
 
         ing_a = get_ing_set(a, "Key Ingredients")
-        # Check if Product B uses "Key Ingredients" or "ingredients"
+        
         ing_b = get_ing_set(b, "Key Ingredients") if "Key Ingredients" in b else get_ing_set(b, "ingredients")
 
         state["comparison_page"] = {

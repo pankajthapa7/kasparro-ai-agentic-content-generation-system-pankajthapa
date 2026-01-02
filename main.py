@@ -20,11 +20,11 @@ RAW_PRODUCT_DATA = {
 }
 
 def main():
-    # 1. Recreate the output directory
+   
     output_dir = "output"
     os.makedirs(output_dir, exist_ok=True)
 
-    # 2. Initialize Agents
+    
     agents = {
         "parser": ParserAgent(),
         "question": QuestionAgent(),
@@ -33,21 +33,19 @@ def main():
         "comparison": ComparisonAgent()
     }
 
-    # 3. Run Orchestrator
+    
     orchestrator = Orchestrator(agents)
     print("--- Executing Agentic System ---")
     pages = orchestrator.run(RAW_PRODUCT_DATA)
 
-    # 4. Save the results
-    # Your Orchestrator returns a dict where key=filename, value=content
+   
     for filename, content in pages.items():
         file_path = os.path.join(output_dir, filename)
         with open(file_path, "w", encoding="utf-8") as f:
-            # We save the specific page inside the content dictionary
-            # Example: from content["faq_page"]
+            
             page_key = filename.replace(".json", "")
             
-            # Use the specific page key if it exists, otherwise dump the whole content
+           
             data_to_save = content.get(page_key) if isinstance(content, dict) and page_key in content else content
             
             json.dump(data_to_save, f, indent=2, ensure_ascii=False)
