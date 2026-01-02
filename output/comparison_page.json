@@ -1,57 +1,14 @@
 {
   "page_type": "comparison",
-  "products": {
-    "product_a": {
-      "name": "GlowBoost Vitamin C Serum",
-      "ingredients": [
-        "Vitamin C",
-        "Hyaluronic Acid"
-      ],
-      "benefits": [
-        "Brightening",
-        "Fades dark spots"
-      ],
-      "price": "₹699"
-    },
-    "product_b": {
-      "name": "RadiantFix Vitamin C Serum",
-      "concentration": "15% Vitamin C",
-      "ingredients": [
-        "Vitamin C",
-        "Niacinamide"
-      ],
-      "benefits": [
-        "Brightening",
-        "Improves skin texture"
-      ],
-      "price": "₹899"
-    }
-  },
+  "product_a": "GlowBoost Vitamin C Serum",
+  "product_b": "RadiantFix Vitamin C Serum",
   "comparison": {
     "price": {
-      "product_a_price": "₹699",
-      "product_b_price": "₹899"
+      "a": "₹699",
+      "b": "₹899"
     },
-    "ingredients": {
-      "common_ingredients": [
-        "Vitamin C"
-      ],
-      "product_a_unique": [
-        "Hyaluronic Acid"
-      ],
-      "product_b_unique": [
-        "Niacinamide"
-      ]
-    },
-    "benefits": {
-      "product_a_benefits": [
-        "Brightening",
-        "Fades dark spots"
-      ],
-      "product_b_benefits": [
-        "Brightening",
-        "Improves skin texture"
-      ]
-    }
+    "common_ingredients": [
+      "Vitamin C"
+    ]
   }
 }

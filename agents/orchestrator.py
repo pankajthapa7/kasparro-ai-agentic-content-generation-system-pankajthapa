@@ -1,34 +1,22 @@
-from agents.product_parser_agent import ProductParserAgent
-from agents.question_generation_agent import QuestionGenerationAgent
-from agents.content_logic_agent import ContentLogicAgent
-from agents.comparison_logic_agent import ComparisonLogicAgent
-from agents.page_assembly_agent import PageAssemblyAgent
-
-from templates.faq_template import FAQTemplate
-from templates.product_page_template import ProductPageTemplate
-from templates.comparison_template import ComparisonTemplate
-
-from data.fictional_product_b import PRODUCT_B
-
 class Orchestrator:
-    def run(self, raw_data):
-        parser = ProductParserAgent()
-        question_agent = QuestionGenerationAgent()
-        logic_agent = ContentLogicAgent()
-        comparison_logic = ComparisonLogicAgent()
-        assembler = PageAssemblyAgent()
+    def __init__(self, agents: dict):
+        self.agents = agents
 
-        product = parser.run(raw_data)
-        questions = question_agent.run(product)
+    def run(self, raw_product_data: dict) -> dict:
+        state = {}
 
+        # 1. Prepare base data
+        state["product"] = self.agents["parser"].run(raw_product_data)
+        state["questions"] = self.agents["question"].run(state["product"])
+
+        # 2. Sequential update of state (Each agent adds its piece to the state)
+        state = self.agents["faq"].run(state)
+        state = self.agents["product_page"].run(state)
+        state = self.agents["comparison"].run(state)
+
+        # 3. Return the specific results with their intended filenames
         return {
-            "faq.json": assembler.assemble(
-                FAQTemplate().render(product, questions, logic_agent)
-            ),
-            "product_page.json": assembler.assemble(
-                ProductPageTemplate().render(product, logic_agent)
-            ),
-            "comparison_page.json": assembler.assemble(
-                ComparisonTemplate().render(product, PRODUCT_B, comparison_logic)
-            )
+            "faq_page.json": state.get("faq_page"),
+            "product_page.json": state.get("product_page"),
+            "comparison_page.json": state.get("comparison_page")
         }
